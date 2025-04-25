@@ -1,0 +1,77 @@
+AUTOMATIZACIÓN DE LA INSTALACIÓN DE PYTHON Y DEPENDENCIAS
+
+Para automatizar la instalación de Python y las dependencias necesarias para ejecutar el bot, sigue estos pasos:
+
+1. **CREAR UN SCRIPT DE INSTALACIÓN**:
+   - Usa un archivo `.bat` (Windows) o un script de shell `.sh` (Linux/macOS) para automatizar la instalación.
+
+2. **CONTENIDO DEL SCRIPT PARA WINDOWS**:
+   - Crea un archivo llamado `instalacion.bat` con el siguiente contenido:
+     ```
+     @echo off
+     echo Verificando instalación de Python...
+     python --version >nul 2>&1 || (
+         echo Python no está instalado. Descargando e instalando Python...
+         powershell -Command "Start-Process 'https://www.python.org/ftp/python/3.10.9/python-3.10.9-amd64.exe' -Wait"
+     )
+     echo Instalando dependencias...
+     pip install --upgrade pip
+     pip install google-api-python-client google-auth pandas openpyxl
+     echo Instalación completada.
+     pause
+     ```
+
+3. **CONTENIDO DEL SCRIPT PARA LINUX/MACOS**:
+   - Crea un archivo llamado `instalacion.sh` con el siguiente contenido:
+     ```bash
+     #!/bin/bash
+     echo "Verificando instalación de Python..."
+     if ! command -v python3 &> /dev/null
+     then
+         echo "Python no está instalado. Instalando Python..."
+         sudo apt update && sudo apt install -y python3 python3-pip
+     fi
+     echo "Instalando dependencias..."
+     pip3 install --upgrade pip
+     pip3 install google-api-python-client google-auth pandas openpyxl
+     echo "Instalación completada."
+     ```
+
+4. **EJECUTAR EL SCRIPT**:
+   - En Windows, haz doble clic en el archivo `instalacion.bat`.
+   - En Linux/macOS, ejecuta `chmod +x instalacion.sh` y luego `./instalacion.sh`.
+
+5. **NOTAS**:
+   - Asegúrate de tener permisos de administrador para instalar Python y las dependencias.
+   - Si Python ya está instalado, el script solo instalará las dependencias necesarias.
+
+6. **AGREGAR UNA LICENCIA**:
+   - Para evitar que el instalador sea identificado como malicioso, incluye una licencia en el directorio del proyecto.
+   - Crea un archivo llamado `LICENSE` con el siguiente contenido:
+     ```
+     MIT License
+
+     Copyright (c) 2023 [Tu Nombre o Nombre de la Organización]
+
+     Permission is hereby granted, free of charge, to any person obtaining a copy
+     of this software and associated documentation files (the "Software"), to deal
+     in the Software without restriction, including without limitation the rights
+     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+     copies of the Software, and to permit persons to whom the Software is
+     furnished to do so, subject to the following conditions:
+
+     The above copyright notice and this permission notice shall be included in all
+     copies or substantial portions of the Software.
+
+     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+     AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+     SOFTWARE.
+     ```
+
+7. **NOTAS ADICIONALES**:
+   - Asegúrate de incluir el archivo `LICENSE` en el mismo directorio que los scripts de instalación.
+   - Esto ayudará a que los sistemas de seguridad identifiquen el instalador como legítimo.
