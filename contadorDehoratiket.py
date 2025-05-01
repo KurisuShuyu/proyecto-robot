@@ -102,4 +102,4 @@ if __name__ == "__main__":
             generar_excel(datos_procesados)
     except Exception as e:
         print(f"❌ Error al ejecutar el bot: {e}")
-        #Prueba
+        #Prueb
